@@ -30,6 +30,7 @@ public:
 
 	void insert_after(int value, int position) {
 
+		// make sure position is actually a valid position (it must be >= 0)
 		if (position < 0) {
 
 			cout << "Position must be >= 0." << endl;
@@ -37,21 +38,21 @@ public:
 
 		}
 
-		Node* newNode = new Node(value);
+		Node* newNode = new Node(value); // create new node with the passed value
 
-		if (!head) {
+		if (!head) { // if list is empty, set head and tail to the new node and return
 
 			head = tail = newNode;
 			return;
 
 		}
 
-		Node* temp = head;
+		Node* temp = head; // create a temporary node to traverse the list and initialize it to the head
 
-		for (int i = 0; i < position && temp; ++i)
+		for (int i = 0; i < position && temp; ++i) // traverse the list until the position is reached or the end of the list is reached
 			temp = temp->next;
 
-		if (!temp) {
+		if (!temp) { // make sure the position is valid (it is within the list); if not, print an error message, delete the new node, and return
 
 			cout << "Position exceeds list size. Node not inserted.\n";
 			delete newNode;
@@ -59,40 +60,43 @@ public:
 
 		}
 
-		newNode->next = temp->next;
-		newNode->prev = temp;
+		newNode->next = temp->next; // set the new node's next pointer to the current node's next pointer
+		newNode->prev = temp; // set the new node's previous pointer to the current node
 
-		if (temp->next)
+		// the two lines above basically insert the new node between the current node and the current node's next node
+		// however, the nodes aren't completely linked yet
+
+		if (temp->next) // if the current node has a next node, set the next node's previous pointer to the new node
 			temp->next->prev = newNode;
-		else
+		else // if the current node is the current tail, set the tail to the new node
 			tail = newNode;
 
-		temp->next = newNode;
+		temp->next = newNode; // finally, set the current node's next pointer to the new node
 
 	}
 
 	void delete_val(int value) {
 
-		if (!head) return;
+		if (!head) return; // make sure the list isn't empty
 
-		Node* temp = head;
+		Node* temp = head; // create a temporary node to traverse the list and initialize it to the head
 
-		while (temp && temp->data != value)
+		while (temp && temp->data != value) // traverse the list until the value is found or the end of the list is reached
 			temp = temp->next;
 
-		if (!temp) return;
+		if (!temp) return; // if the value wasn't found, return
 
-		if (temp->prev)
+		if (temp->prev) // if the current node has a previous node, set the previous node's next pointer to the current node's next pointer
 			temp->prev->next = temp->next;
-		else
+		else // if the current node is the current head, set the head to the current node's next node
 			head = temp->next;
 
-		if (temp->next)
+		if (temp->next) // if the current node has a next node, set that node's previous pointer to the current node's previous pointer
 			temp->next->prev = temp->prev;
-		else
+		else // if the current node is the current tail, set the tail to the current node's previous node
 			tail = temp->prev;
 
-		delete temp;
+		delete temp; // delete the current node
 
 	}
 
