@@ -26,6 +26,7 @@ private:
 	Node* tail;
 
 public:
+	// constructor
 	DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
 	// insert_after() inserts a new node after a specified position
@@ -92,10 +93,10 @@ public:
 
 		if (!temp) return; // if the value wasn't found, return
 
-		if (temp->prev) // if the current node has a previous node, set the previous node's next pointer to the current node's next pointer
-			temp->prev->next = temp->next;
-		else // if the current node is the current head, set the head to the current node's next node
-			head = temp->next;
+		if (temp->prev) // if the current node has a previous node
+			temp->prev->next = temp->next; // set the previous node's next pointer to the current node's next pointer
+		else // if the current node is the current head
+			head = temp->next; // set the head to the current node's next node
 
 		if (temp->next) // if the current node has a next node, set that node's previous pointer to the current node's previous pointer
 			temp->next->prev = temp->prev;
@@ -111,9 +112,9 @@ public:
 	// returns: void
 	void delete_pos(int pos) {
 
-		if (!head) { // if the list is empty, print an error message and return (as nothing can be deleted)
+		if (!head) { // if the list is empty (meaning there's nothing to delete)
 
-			cout << "List is empty." << endl;
+			cout << "List is empty." << endl; // print an error message and return
 			return;
 
 		}
@@ -243,89 +244,102 @@ public:
 	// returns: void
 	void pop_back() {
 
-		if (!tail) { // if the list is empty, print an error message and return (as nothing can be popped)
+		if (!tail) { // if the list is empty (meaning there's nothing to pop)
 
-			cout << "List is empty." << endl;
+			cout << "List is empty." << endl; // print an error message and return
 			return;
 
 		}
 
 		Node* temp = tail; // create a temporary node to store the current tail
 
-		if (tail->prev) {
+		if (tail->prev) { // if the tail has a previous node (meaning there is more than one element in the list)
 
-			tail = tail->prev;
-			tail->next = nullptr;
+			tail = tail->prev; // set the tail to the previous node
+			tail->next = nullptr; // set the new tail's next pointer to null (as it is now the last node in the list)
 
-		} else {
+		} else { // if the tail is the only node in the list (meaning the list will be empty after pop)
 
-			head = tail = nullptr;
+			head = tail = nullptr; // set the head and tail pointers to null
 
 		}
 
-		delete temp;
+		delete temp; // delete the old tail to free up memory
 
 	}
 
+	// ~DoublyLinkedList() is the destructor for the DoublyLinkedList class that deletes all nodes in the list
+	// arguments: none
+	// returns: void
 	~DoublyLinkedList() {
 
-		while (head) {
+		while (head) { // while there are still nodes in the list
 
-			Node* temp = head;
-			head = head->next;
-			delete temp;
+			Node* temp = head; // create a temporary node to store the current head
+			head = head->next; // set the head to the next node
+			delete temp; // delete the old head
+
+			// this process will continue until the head is null (meaning all nodes have been deleted)
 
 		}
 	}
 
+	// print() prints the list from head to tail
+	// arguments: none
+	// returns: void
 	void print() {
 
-		Node* current = head;
+		Node* current = head; // create a temporary node to traverse the list and initialize it to the head
 
-		if (!current) {
+		if (!current) { // if the list has no elements
 
-			cout << "List is empty." << endl;
+			cout << "List is empty." << endl; // print an error message and return
 			return;
 
 		}
 
-		while (current) {
+		while (current) { // loop while there are still nodes in the list
 
-			cout << current->data << " ";
-			current = current->next;
+			cout << current->data << " "; // print the current node's data
+			current = current->next; // move to the next node
 
 		}
 
-		cout << endl;
+		cout << endl; // print a new line at the end for formatting purposes
 
 	}
 
+	// print_reverse() prints the list from tail to head
+	// arguments: none
+	// returns: void
 	void print_reverse() {
 
-		Node* current = tail;
+		Node* current = tail; // create a temporary node to traverse the list and initialize it to the tail
 
-		if (!current) {
+		if (!current) { // if the list has no elements
 
-			cout << "List is empty." << endl;
+			cout << "List is empty." << endl; // print an error message and return
 			return;
 
 		}
 
-		while (current) {
+		while (current) { // loop while there are still nodes in the list
 
-			cout << current->data << " ";
-			current = current->prev;
+			cout << current->data << " "; // print the current node's data
+			current = current->prev; // move to the previous node
 
 		}
 
-		cout << endl;
+		cout << endl; // print a new line at the end for formatting purposes
 
 	}
 };
 
+// main() is the entry point of the program and tests the DoublyLinkedList class
+// arguments: none
+// returns: int - the exit code of the program
 int main() {
 
-	cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS; // dummy statement to avoid compiler warning
 	return 0;
 
 }
