@@ -33,7 +33,7 @@ public:
 	// returns: void
 	void insert_after(int value, int position) {
 
-		// make sure position is actually a valid position (it must be >= 0)
+		// make sure position is actually a valid position (it must be >= 0) (because nothing can be inserted at a negative position)
 		if (position < 0) {
 
 			cout << "Position must be >= 0." << endl;
@@ -83,7 +83,7 @@ public:
 	// returns: void
 	void delete_val(int value) {
 
-		if (!head) return; // make sure the list isn't empty
+		if (!head) return; // make sure the list isn't empty (because if it is empty, there's nothing to delete)
 
 		Node* temp = head; // create a temporary node to traverse the list and initialize it to the head
 
@@ -111,16 +111,16 @@ public:
 	// returns: void
 	void delete_pos(int pos) {
 
-		if (!head) { // if the list is empty, print an error message and return
+		if (!head) { // if the list is empty, print an error message and return (as nothing can be deleted)
 
 			cout << "List is empty." << endl;
 			return;
 
 		}
 
-		if (pos == 1) { // if the position is 1, you can just pop the front of the list and return
+		if (pos == 1) { // if the position is 1 (which means the head should be deleted)
 
-			pop_front();
+			pop_front(); // you can just pop the front of the list and return (as the head will be deleted)
 			return;
 
 		}
@@ -129,9 +129,9 @@ public:
 
 		for (int i = 1; i < pos; i++) { // traverse the list until the position is reached
 
-			if (!temp) { // if the end of the list is reached before the position, print an error message and return
+			if (!temp) { // if the end of the list is reached before the position
 
-				cout << "Position doesn't exist." << endl;
+				cout << "Position doesn't exist." << endl; // print an error message and
 				return;
 
 			} else {
@@ -141,16 +141,16 @@ public:
 			}
 		}
 
-		if (!temp) { // if the position is invalid, print an error message and return
+		if (!temp) { // if the current node's position is invalid
 
-			cout << "Position doesn't exist." << endl;
+			cout << "Position doesn't exist." << endl; // print an error message and return
 			return;
 
 		}
 
-		if (!temp->next) { // if the node to delete is the tail, you can just pop the back of the list and return
+		if (!temp->next) { // if the node to delete is the tail
 
-			pop_back();
+			pop_back(); // you can just pop the back of the list and return (as the tail will be deleted)
 			return;
 
 		}
@@ -165,13 +165,16 @@ public:
 
 	}
 
+	// push_back() adds a new node to the end of the list
+	// arguments: int v - the value to add to the list
+	// returns: void
 	void push_back(int v) {
 
 		Node* newNode = new Node(v); // create a new node with the passed value
 
-		if (!tail) { // if the list is empty, set the head and tail to the new node
+		if (!tail) { // if the list is empty
 
-			head = tail = newNode;
+			head = tail = newNode; // set the head and tail to the new node
 
 		} else {
 
@@ -184,13 +187,16 @@ public:
 		}
 	}
 
+	// push_front() adds a new node to the front of the list
+	// arguments: int v - the value to add to the list
+	// returns: void
 	void push_front(int v) {
 
 		Node* newNode = new Node(v); // create a new node with the passed value
 
-		if (!head) { // if the list is empty, set the head and tail to the new node
+		if (!head) { // if the list is empty
 
-			head = tail = newNode;
+			head = tail = newNode; // set the head and tail to the new node
 
 		} else {
 
@@ -203,42 +209,48 @@ public:
 		}
 	}
 
+	// pop_front() removes the first node in the list
+	// arguments: none
+	// returns: void
 	void pop_front() {
 
-		if (!head) {
+		if (!head) { // if the list is empty, print an error message and return (as nothing can be popped)
 
 			cout << "List is empty." << endl;
 			return;
 
 		}
 
-		Node* temp = head;
+		Node* temp = head; // create a temporary node to store the current head
 
-		if (head->next) {
+		if (head->next) { // if the head has a next node (meaning there is more than one element in the list)
 
-			head = head->next;
-			head->prev = nullptr;
+			head = head->next; // set the head to the next node
+			head->prev = nullptr; // set the new head's previous pointer to null (as it is now the first node in the list)
 
-		} else {
+		} else { // if the head is the only node in the list (meaning the list will be empty after pop)
 
-			head = tail = nullptr;
+			head = tail = nullptr; // set the head and tail to null
 
 		}
 
-		delete temp;
+		delete temp; // delete the old head to free up memory
 
 	}
 
+	// pop_back() removes the last node in the list
+	// arguments: none
+	// returns: void
 	void pop_back() {
 
-		if (!tail) {
+		if (!tail) { // if the list is empty, print an error message and return (as nothing can be popped)
 
 			cout << "List is empty." << endl;
 			return;
 
 		}
 
-		Node* temp = tail;
+		Node* temp = tail; // create a temporary node to store the current tail
 
 		if (tail->prev) {
 
