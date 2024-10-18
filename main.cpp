@@ -373,12 +373,14 @@ int main() {
 
 	// populate the list with some values for testing
 	list.insert_after(10, 0);
-	list.insert_after(20, 1);
-	list.insert_after(30, 2);
-	list.insert_after(40, 3);
-	list.insert_after(50, 4);
-	list.insert_after(60, 5);
-	list.insert_after(70, 6);
+	list.insert_after(20, 0); // due to how the code is written, you have to insert values at position 0 twice to begin the list
+	// to expand on this, the first insertion will become the head, and the second must also be added at position 0 to be inserted after the head (as the method name suggests)
+	list.insert_after(30, 1);
+	list.insert_after(40, 2);
+	list.insert_after(50, 3);
+	list.insert_after(60, 4);
+	list.insert_after(70, 5);
+	list.insert_after(80, 6);
 
 	list.every_other_element(); // print every other element in the list
 
