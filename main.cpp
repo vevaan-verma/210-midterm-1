@@ -44,9 +44,9 @@ public:
 
 		Node* newNode = new Node(value); // create new node with the passed value
 
-		if (!head) { // if list is empty, set head and tail to the new node and return
+		if (!head) { // if list is empty (meaning there's nothing to insert after)
 
-			head = tail = newNode;
+			head = tail = newNode; // set head and tail to the new node and return
 			return;
 
 		}
@@ -56,10 +56,10 @@ public:
 		for (int i = 0; i < position && temp; ++i) // traverse the list until the position is reached or the end of the list is reached
 			temp = temp->next;
 
-		if (!temp) { // make sure the position is valid (it is within the list); if not, print an error message, delete the new node, and return
+		if (!temp) { // if the position is invalid (it is out of the list's bounds)
 
-			cout << "Position exceeds list size. Node not inserted.\n";
-			delete newNode;
+			cout << "Position exceeds list size. Node not inserted.\n"; // print an error message
+			delete newNode; // delete the new node to free up memory and return
 			return;
 
 		}
@@ -70,10 +70,10 @@ public:
 		// the two lines above basically insert the new node between the current node and the current node's next node
 		// however, the nodes aren't completely linked yet
 
-		if (temp->next) // if the current node has a next node, set the next node's previous pointer to the new node
-			temp->next->prev = newNode;
-		else // if the current node is the current tail, set the tail to the new node
-			tail = newNode;
+		if (temp->next) // if the current node has a next node
+			temp->next->prev = newNode; // set the next node's previous pointer to the new node
+		else // if the current node is the current tail
+			tail = newNode; // set the tail to the new node
 
 		temp->next = newNode; // finally, set the current node's next pointer to the new node
 
@@ -98,10 +98,10 @@ public:
 		else // if the current node is the current head
 			head = temp->next; // set the head to the current node's next node
 
-		if (temp->next) // if the current node has a next node, set that node's previous pointer to the current node's previous pointer
-			temp->next->prev = temp->prev;
-		else // if the current node is the current tail, set the tail to the current node's previous node
-			tail = temp->prev;
+		if (temp->next) // if the current node has a next node
+			temp->next->prev = temp->prev; // set the next node's previous pointer to the current node's previous pointer
+		else // if the current node is the current tail
+			tail = temp->prev; // set the tail to the current node's previous node
 
 		delete temp; // delete the current node
 
@@ -121,7 +121,7 @@ public:
 
 		if (pos == 1) { // if the position is 1 (which means the head should be deleted)
 
-			pop_front(); // you can just pop the front of the list and return (as the head will be deleted)
+			pop_front(); // you can just pop the front of the list and return (as the head will be deleted) and return
 			return;
 
 		}
@@ -333,12 +333,54 @@ public:
 		cout << endl; // print a new line at the end for formatting purposes
 
 	}
+
+	// avoid_every_other_element() prints every other element in the list
+	// arguments: none
+	// returns: void
+	void every_other_element() {
+
+		Node* current = head; // create a temporary node to traverse the list and initialize it to the head
+
+		if (!current) { // if the list has no elements (meaning there's nothing to print)
+
+			cout << "List is empty." << endl; // print an error message and return
+			return;
+
+		}
+
+		while (current) { // loop while there are still nodes in the list
+
+			cout << current->data << " "; // print the current node's data
+
+			if (current->next) // if the current node has a next node
+				current = current->next->next; // move to the next, next node
+			else // if the current node is the tail
+				break; // break the loop as there are no more nodes to print
+
+		}
+
+		cout << endl; // print a new line at the end for formatting purposes
+
+	}
 };
 
 // main() is the entry point of the program and tests the DoublyLinkedList class
 // arguments: none
 // returns: int - the exit code of the program
 int main() {
+
+	DoublyLinkedList list; // create a new DoublyLinkedList object
+
+	// populate the list with some values for testing
+	list.insert_after(10, 0);
+	list.insert_after(20, 1);
+	list.insert_after(30, 2);
+	list.insert_after(40, 3);
+	list.insert_after(50, 4);
+	list.insert_after(60, 5);
+	list.insert_after(70, 6);
+
+	list.every_other_element(); // print every other element in the list
 
 	return 0;
 
